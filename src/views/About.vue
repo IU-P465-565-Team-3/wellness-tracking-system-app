@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h3>Software Engineering Project (CSCI-P465/565) by Team 3 @ Indiana University 🔴⚪</h3>
   </div>
 </template>
