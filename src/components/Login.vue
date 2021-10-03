@@ -5,21 +5,21 @@
         <v-card-title>Login</v-card-title>
         <v-card-text>
           <v-text-field label="Username" prepend-icon="mdi-account-circle"/>
-          <v-text-field 
-          label="Password" 
+          <v-text-field
+          label="Password"
           :type="showPassword ? 'text' : 'password'"
           prepend-icon="mdi-lock"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="showPassword = !showPassword"/>
         </v-card-text>
         <v-divider></v-divider>
-        <v-radio-group v-model="row" row>
+        <v-radio-group class="px-4" row>
           <v-radio label="Client" value="radio-1"></v-radio>
           <v-radio label="Fitness Professional" value="radio-2"></v-radio>
           <v-radio label="Admin" value="radio-3"></v-radio>
         </v-radio-group>
         <v-divider></v-divider>
-        <v-card-actions>
+        <v-card-actions class="pa-4">
           <v-btn color="info">Login</v-btn>
         </v-card-actions>
       </v-card>
@@ -28,10 +28,9 @@
 </template>
 <script>
 export default {
-  data()
-  {
-    return{
-      showPassword:false
+  data () {
+    return {
+      showPassword: false
     }
   }
 }
