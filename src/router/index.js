@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login'
+import TaskPlanner from '../components/TaskPlanner'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/plan',
+    name: 'TaskPlanner',
+    component: TaskPlanner
   },
   {
     path: '/about',
