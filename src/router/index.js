@@ -1,14 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Login from '../components/Login'
+import Dashboard from '../components/Dashboard'
+import TaskPlanner from '../components/TaskPlanner'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: {
+      name: 'Login'
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/dashboard',
+    name: Dashboard,
+    component: Dashboard
+  },
+  {
+    path: '/plan',
+    name: 'TaskPlanner',
+    component: TaskPlanner
   },
   {
     path: '/about',

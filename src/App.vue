@@ -3,22 +3,31 @@
     <v-app-bar
       app
       color="primary"
+      flat
       dark
     >
       <div class="d-flex headline align-center">
         Wellness Tracking System
       </div>
-
-      <v-spacer />
-
-      <v-btn
-        href="https://github.com/IU-P465-565-Team-3/wellness-tracking-system-app"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">View GitHub Repository</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-divider vertical class="mx-4" />
+      <v-row v-if="$route.name !== 'Login'">
+        <v-col class="shrink">
+          <v-btn small depressed fab color="primary" to="dashboard">
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary" to="plan">
+            <v-icon>mdi-calendar-clock</v-icon>
+          </v-btn>
+        </v-col>
+        <v-spacer />
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary">
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-app-bar>
 
     <v-main>
