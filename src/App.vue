@@ -9,10 +9,17 @@
       <div class="d-flex headline align-center">
         Wellness Tracking System
       </div>
-      <v-spacer />
-      <v-btn depressed color="primary">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <v-divider vertical class="mx-4" />
+        <v-btn small depressed fab color="primary" to="dashboard">
+          <v-icon>mdi-view-dashboard</v-icon>
+        </v-btn>
+        <v-btn small depressed fab color="primary" to="plan">
+          <v-icon>mdi-calendar-clock</v-icon>
+        </v-btn>
+        <v-spacer />
+        <v-btn small depressed fab color="primary">
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
     </v-app-bar>
 
     <v-main>
