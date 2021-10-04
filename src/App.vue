@@ -10,16 +10,24 @@
         Wellness Tracking System
       </div>
       <v-divider vertical class="mx-4" />
-        <v-btn small depressed fab color="primary" to="dashboard">
-          <v-icon>mdi-view-dashboard</v-icon>
-        </v-btn>
-        <v-btn small depressed fab color="primary" to="plan">
-          <v-icon>mdi-calendar-clock</v-icon>
-        </v-btn>
+      <v-row v-if="$route.name !== 'Login'">
+        <v-col class="shrink">
+          <v-btn small depressed fab color="primary" to="dashboard">
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary" to="plan">
+            <v-icon>mdi-calendar-clock</v-icon>
+          </v-btn>
+        </v-col>
         <v-spacer />
-        <v-btn small depressed fab color="primary">
-          <v-icon>mdi-menu</v-icon>
-        </v-btn>
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary">
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-app-bar>
 
     <v-main>

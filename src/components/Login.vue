@@ -1,16 +1,18 @@
 <template>
   <v-app>
-    <v-content>
+    <v-main>
       <v-card width="500" class="mx-auto mt-9">
         <v-card-title>Login</v-card-title>
         <v-card-text>
-          <v-text-field label="Username" v-model="username" prepend-icon="mdi-account-circle"/>
+          <v-text-field label="Username" v-model="username" prepend-icon="mdi-account-circle"
+          @keydown.enter="authenticate" />
           <v-text-field
           label="Password"
           :type="showPassword ? 'text' : 'password'"
           prepend-icon="mdi-lock"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           v-model="password"
+          @keydown.enter="authenticate"
           @click:append="showPassword = !showPassword"/>
         </v-card-text>
         <v-divider></v-divider>
@@ -28,7 +30,7 @@
           </v-row>
         </v-card-actions>
       </v-card>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 <script>
@@ -39,7 +41,9 @@ export default {
   data () {
     return {
       role: 'radio-1',
-      showPassword: false
+      showPassword: false,
+      username: '',
+      password: ''
     }
   },
   methods: {
