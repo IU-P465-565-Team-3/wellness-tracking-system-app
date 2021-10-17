@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login'
+import Registration from '../components/Registration'
 import Dashboard from '../components/Dashboard'
 import TaskPlanner from '../components/TaskPlanner'
 
@@ -17,6 +18,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/registration',
+    name: 'Registration',
+    component: Registration
   },
   {
     path: '/dashboard',
