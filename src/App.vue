@@ -21,6 +21,11 @@
             <v-icon>mdi-calendar-clock</v-icon>
           </v-btn>
         </v-col>
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary" to="catalog">
+            <v-icon>mdi-meditation</v-icon>
+          </v-btn>
+        </v-col>
         <v-spacer />
         <v-col  class="shrink">
           <v-btn small depressed fab color="primary">

@@ -4,6 +4,7 @@ import Login from '../components/Login'
 import Registration from '../components/Registration'
 import Dashboard from '../components/Dashboard'
 import TaskPlanner from '../components/TaskPlanner'
+import ResourceCatalog from '../components/ResourceCatalog'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/plan',
     name: 'TaskPlanner',
     component: TaskPlanner
+  },
+  {
+    path: '/catalog',
+    name: 'Resource Catalog',
+    component: ResourceCatalog
   },
   {
     path: '/about',
