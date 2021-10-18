@@ -34,12 +34,12 @@ export default new Vuex.Store({
           role
         }) {
           return api.post('/register', {
-            firstName,
-            lastName,
-            dateOfBirth,
+            // firstName,
+            // lastName,
+            // dateOfBirth,
             username,
             password,
-            gender,
+            // gender,
             roleName: role
           })
         }
