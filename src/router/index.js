@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login'
+import Registration from '../components/Registration'
 import Dashboard from '../components/Dashboard'
 import TaskPlanner from '../components/TaskPlanner'
+import ResourceCatalog from '../components/ResourceCatalog'
 
 Vue.use(VueRouter)
 
@@ -19,6 +21,11 @@ const routes = [
     component: Login
   },
   {
+    path: '/register',
+    name: 'Registration',
+    component: Registration
+  },
+  {
     path: '/dashboard',
     name: Dashboard,
     component: Dashboard
@@ -27,6 +34,11 @@ const routes = [
     path: '/plan',
     name: 'TaskPlanner',
     component: TaskPlanner
+  },
+  {
+    path: '/catalog',
+    name: 'Resource Catalog',
+    component: ResourceCatalog
   },
   {
     path: '/about',

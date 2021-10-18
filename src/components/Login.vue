@@ -25,6 +25,9 @@
         <v-card-actions class="pa-4">
           <v-row class="justify-center">
             <v-col class="shrink">
+              <v-btn depressed :to="{ name: 'Registration' }">Join Now</v-btn>
+            </v-col>
+            <v-col class="shrink">
               <v-btn color="info" @click="authenticate">Login</v-btn>
             </v-col>
           </v-row>

@@ -23,6 +23,25 @@ export default new Vuex.Store({
             username,
             password
           })
+        },
+        async register (ctx, {
+          firstName,
+          lastName,
+          dateOfBirth,
+          username,
+          password,
+          gender,
+          role
+        }) {
+          return api.post('/register', {
+            firstName,
+            lastName,
+            dateOfBirth,
+            username,
+            password,
+            gender,
+            roleName: role
+          })
         }
       }
     }

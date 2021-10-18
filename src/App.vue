@@ -10,7 +10,7 @@
         Wellness Tracking System
       </div>
       <v-divider vertical class="mx-4" />
-      <v-row v-if="$route.name !== 'Login'">
+      <v-row v-if="$route.name !== 'Login' && $route.name !== 'Registration'">
         <v-col class="shrink">
           <v-btn small depressed fab color="primary" to="dashboard">
             <v-icon>mdi-view-dashboard</v-icon>
@@ -19,6 +19,11 @@
         <v-col  class="shrink">
           <v-btn small depressed fab color="primary" to="plan">
             <v-icon>mdi-calendar-clock</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col  class="shrink">
+          <v-btn small depressed fab color="primary" to="catalog">
+            <v-icon>mdi-meditation</v-icon>
           </v-btn>
         </v-col>
         <v-spacer />
