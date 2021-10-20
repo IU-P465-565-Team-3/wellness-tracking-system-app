@@ -40,7 +40,7 @@ export default new Vuex.Store({
             username,
             password,
             gender,
-            roleName: role
+            role
           })
         }
       }
