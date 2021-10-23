@@ -126,7 +126,7 @@ export default {
       password: '',
       confirmPassword: '',
       showPassword: false,
-      gender: 'Male',
+      gender: 'Female',
       role: 'CLIENT',
       dobMenu: false
     }
