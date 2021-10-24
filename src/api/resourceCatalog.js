@@ -1,11 +1,8 @@
-import axios from 'axios'
+import resource from './index.js'// import index.js instead of this.
 
-const resourceCatalog = axios.create({
-  baseURL: 'https://iub-wellness-tracker-api.herokuapp.com'
-})
-
+// change this in api.get;
 export default {
   getResource () {
-    return resourceCatalog.get('/listing')
+    return resource.get('/listing')
   }
 }
