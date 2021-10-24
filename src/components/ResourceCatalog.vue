@@ -1,15 +1,15 @@
 <template>
     <v-container class="my-5" grid-list-md>
         <v-layout row wrap>
-            <v-flex xs12 sm6 md6 lg4 v-for="workout in catalog" :key="workout.name">
+            <v-flex xs12 sm6 md6 lg4 v-for="plans in resourse" :key="plans.id">
                 <v-card width="600" height="500" class="text-center ma-2">
                     <v-responsive class="pt-4">
-                        <v-img  width="100%" height="300" src= "meditation.jpg" class="text-center"></v-img>
+                        <v-img  width="100%" height="300" src= "plans.imageUrl" class="text-center"></v-img>
                     </v-responsive>
                     <v-card-text>
-                        <div class="subheading" id="test"> <h2>{{ workout.name }}</h2></div>
-                        <div class="subheading">{{ workout.discription }}</div>
-                        <div class="subheading">{{workout.publisherId}}</div>
+                        <div class="subheading" id="test"> <h2>{{ plans.type.name}}</h2></div>
+                        <div class="subheading">{{ plans.description }}</div>
+                        <div class="subheading">{{plans.id}}</div>
                     </v-card-text>
 
                     <v-row>
@@ -33,7 +33,7 @@
                             <template v-slot:default="dialog">
                                 <v-card>
                                     <v-toolbar color="blue lighten-1">
-                                        Workout Details of the {{workout.name}}
+                                        plans Details of the {{plans.type.name}}
                                         <v-spacer></v-spacer>
 
                                         <v-btn text @click="dialog.value = false" color="red">
@@ -42,14 +42,14 @@
                                     </v-toolbar>
 
                                     <v-responsive class="pt-4">
-                                        <v-img  width="100%" height="300" src= "advanced workout.jpg" class="text-center"></v-img>
+                                        <v-img  width="100%" height="300" src= "plans.imageUrl" class="text-center"></v-img>
                                     </v-responsive>
 
                                     <v-card-text>
-                                        <div><h4>Periods: {{today}}</h4></div>
-                                        <div><h4>Workout name: {{ workout.name }}</h4></div>
-                                        <div><h4>Workout Creator: : {{workout.publisherId}}</h4></div>
-                                        <div><h4>Description: {{workout.description}}</h4></div>
+                                        <div><h4>Periods: 1 week from {{today}}</h4></div>
+                                        <div><h4>Workout name: {{ plans.type.name }}</h4></div>
+                                        <div><h4>Workout Creator: {{plans.user.username}}</h4></div>
+                                        <div><h4>Description: {{plans.description}}</h4></div>
 
                                     </v-card-text>
 
@@ -75,24 +75,26 @@
 
 <script>
 
+import resourseApi from '../api/resourceCatalog.js'
+
 export default {
+
   data () {
     return {
       today: new Date().toISOString().substr(5, 5),
-
-      datas: '',
-
-      catalog:
-            [
-              { workoutId: '0001', typeID: '01', name: 'Beginner Level 1', publisherId: '1027', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0002', typeID: '01', name: 'Beginner Level 2', publisherId: '1027', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0003', typeID: '01', name: 'Beginner Level 3', publisherId: '1027', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0004', typeID: '01', name: 'Adept Level 1', publisherId: '3321', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0005', typeID: '01', name: 'Adept Level 2', publisherId: '3321', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0006', typeID: '01', name: 'Expert Level 1', publisherId: '4678', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' },
-              { workoutId: '0007', typeID: '01', name: 'Expert Level 1', publisherId: '4678', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et leo molestie, rutrum magna vitae, gravida urna. Nullam eleifend, quam porttitor suscipit dapibus, nibh velit commodo metus, sodales tincidunt mi libero vel eros. Duis nisl ligula, commodo eget lectus et, dapibus dapibus eros. Aenean quis nisi non felis faucibus vulputate. Sed aliquet eu nisi ut rhoncus. Duis porta arcu eu arcu blandit, vel vehicula urna pellentesque. Phasellus non lacus in ante egestas venenatis non sit amet nulla. Suspendisse sit amet placerat lectus, vel lobortis turpis. Vestibulum mollis volutpat lorem, vel efficitur est placerat posuere. Praesent ac faucibus mauris. Etiam lacinia elementum erat non imperdiet. Maecenas eu varius ligula. Sed semper porta odio, sit amet ultrices nulla ullamcorper.' }
-            ]
+      resourse: []
     }
+  },
+
+  created () {
+    resourseApi.getResource()
+      .then(response => {
+        this.resourse = response.data
+        console.log(this.resourse)
+      })
+      .catch(error => {
+        console.log('There was an error: ' + error.response)
+      })
   }
 }
 
