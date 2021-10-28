@@ -15,13 +15,6 @@
           @keydown.enter="authenticate"
           @click:append="showPassword = !showPassword"/>
         </v-card-text>
-        <v-divider></v-divider>
-        <v-radio-group class="px-4" row v-model="role">
-          <v-radio label="Client" value="radio-1"></v-radio>
-          <v-radio label="Fitness Professional" value="radio-2"></v-radio>
-          <v-radio label="Admin" value="radio-3"></v-radio>
-        </v-radio-group>
-        <v-divider></v-divider>
         <v-card-actions class="pa-4">
           <v-row class="justify-center">
             <v-col class="shrink">

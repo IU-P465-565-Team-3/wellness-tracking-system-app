@@ -90,9 +90,9 @@
           <v-row>
             <v-col>
               <label>Account Type</label>
-              <v-radio-group class="px-4" row v-model="role" hide-details="">
-                <v-radio label="Client" :value="'CLIENT'"></v-radio>
-                <v-radio label="Fitness Professional" :value="'PROFESSIONAL'"></v-radio>
+              <v-radio-group class="px-4" row v-model="role" hide-details>
+                <v-radio label="Client" :value="Role.Client"></v-radio>
+                <v-radio label="Fitness Professional" :value="Role.Professional"></v-radio>
               </v-radio-group>
             </v-col>
           </v-row>
@@ -115,6 +115,7 @@
 <script>
 
 import { mapActions } from 'vuex'
+import { Role } from '../enums'
 
 export default {
   data () {
@@ -127,8 +128,9 @@ export default {
       confirmPassword: '',
       showPassword: false,
       gender: 'Female',
-      role: 'CLIENT',
-      dobMenu: false
+      role: Role.Client,
+      dobMenu: false,
+      Role
     }
   },
   methods: {
