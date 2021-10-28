@@ -1,15 +1,14 @@
 <template>
     <v-container class="my-5" grid-list-md>
         <v-layout row wrap>
-            <v-flex xs12 sm6 md6 lg4 v-for="plans in resourse" :key="plans.id">
+            <v-flex xs12 sm6 md6 lg4 v-for="listing in listings" :key="listing.id">
                 <v-card width="600" height="500" class="text-center ma-2">
                     <v-responsive class="pt-4">
-                        <v-img  width="100%" height="300" src= "plans.imageUrl" class="text-center"></v-img>
+                        <v-img  width="100%" height="300" :src="listing.imageUrl" class="text-center"></v-img>
                     </v-responsive>
                     <v-card-text>
-                        <div class="subheading" id="test"> <h2>{{ plans.type.name}}</h2></div>
-                        <div class="subheading">{{ plans.description }}</div>
-                        <div class="subheading">{{plans.id}}</div>
+                        <div class="subheading" id="test"> <h2>{{ listing.name}}</h2></div>
+                        <div class="subheading">{{ listing.description }}</div>
                     </v-card-text>
 
                     <v-row>
@@ -33,7 +32,7 @@
                             <template v-slot:default="dialog">
                                 <v-card>
                                     <v-toolbar color="blue lighten-1">
-                                        plans Details of the {{plans.type.name}}
+                                        {{listing.name}}
                                         <v-spacer></v-spacer>
 
                                         <v-btn text @click="dialog.value = false" color="red">
@@ -42,14 +41,13 @@
                                     </v-toolbar>
 
                                     <v-responsive class="pt-4">
-                                        <v-img  width="100%" height="300" src= "plans.imageUrl" class="text-center"></v-img>
+                                        <v-img  width="100%" height="300" :src="listing.imageUrl" class="text-center"></v-img>
                                     </v-responsive>
 
                                     <v-card-text>
-                                        <div><h4>Periods: 1 week from {{today}}</h4></div>
-                                        <div><h4>Workout name: {{ plans.type.name }}</h4></div>
-                                        <div><h4>Workout Creator: {{plans.user.username}}</h4></div>
-                                        <div><h4>Description: {{plans.description}}</h4></div>
+                                        <div><h4>Name: {{ listing.name }}</h4></div>
+                                        <div><h4>Creator: {{ listing.user.firstName }} {{ listing.user.lastName }} ({{ listing.user.username }})</h4></div>
+                                        <div><h4>Description: {{ listing.description }}</h4></div>
 
                                     </v-card-text>
 
@@ -75,22 +73,20 @@
 
 <script>
 
-import resourseApi from '../api/resourceCatalog.js'
+import api from '../api/resourceCatalog.js'
 
 export default {
 
   data () {
     return {
-      today: new Date().toISOString().substr(5, 5),
-      resourse: []
+      listings: []
     }
   },
-
-  created () {
-    resourseApi.getResource()
+  mounted () {
+    api.getResource()
       .then(response => {
-        this.resourse = response.data
-        console.log(this.resourse)
+        const listings = response.data
+        this.listings.splice(0, listings.length, ...listings)
       })
       .catch(error => {
         console.log('There was an error: ' + error.response)
