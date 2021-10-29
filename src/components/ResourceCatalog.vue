@@ -139,7 +139,6 @@ export default {
       this.events.splice(0, this.events.length)
       this.dialogOpen = false
       this.startDate = moment().format('YYYY-MM-DD')
-      this.selectedListing = null
     }
   },
   mounted () {
