@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login'
 import Registration from '../components/Registration'
 import Dashboard from '../components/Dashboard'
-import ActivityPlanner from '../feature/EventPlanner/Main.vue'
+import ActivityPlanner from '../components/EventPlanner'
 import ResourceCatalog from '../components/ResourceCatalog'
 
 Vue.use(VueRouter)

@@ -12,7 +12,10 @@
           <v-calendar
             ref="calendar"
             :type="type"
-            :event-overlap-threshold="30"
+            :events="events"
+            :event-overlap-mode="mode"
+            :event-overlap-threshold="5"
+            :interval-height="30"
           ></v-calendar>
         </v-sheet>
       </v-col>
@@ -61,11 +64,21 @@
 </template>
 <script>
 import moment from 'moment'
+import { getEnrollments } from '../api/plans'
 
 export default {
   data () {
     return {
-      type: 'week'
+      type: 'week',
+      mode: 'stack',
+      colors: [
+        '#6a3d9a',
+        '#ff7f00',
+        '#e31a1c',
+        '#33a02c',
+        'primary'
+      ],
+      events: []
     }
   },
   computed: {
@@ -94,6 +107,23 @@ export default {
   methods: {
     rng (min, max) {
       return Math.round(Math.random() * (max - min) + min)
+    }
+  },
+  async mounted () {
+    this.events.splice(0, this.events.length)
+    const enrollments = (await getEnrollments()).data
+    for (const sub of enrollments) {
+      const subColor = this.colors.pop()
+      const startDate = new Date(sub.startDate).getTime()
+      const mappedEvents = sub.plan.events.map(e => ({
+        name: e.name,
+        description: e.description,
+        start: startDate + e.startTime,
+        end: startDate + e.endTime,
+        color: subColor,
+        timed: true
+      }))
+      this.events.push(...mappedEvents)
     }
   }
 }
