@@ -18,7 +18,7 @@
                 ref="dobMenu"
                 v-model="dobMenu"
                 :close-on-content-click="false"
-                :return-value.sync="dateOfBirth"
+                :nudge-right="40"
                 transition="scale-transition"
                 offset-y
                 min-width="auto"
@@ -35,24 +35,8 @@
                 </template>
                 <v-date-picker
                   v-model="dateOfBirth"
-                  no-title
-                  scrollable
+                  @input="dobMenu = false"
                 >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="dobMenu = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.dobMenu.save(dateOfBirth)"
-                  >
-                    OK
-                  </v-btn>
                 </v-date-picker>
               </v-menu>
             </v-col>
