@@ -4,5 +4,9 @@ import resource from './index.js'// import index.js instead of this.
 export default {
   getResource () {
     return resource.get('/listing')
+  },
+
+  searchResource (searchWord) {
+    return resource.get('/listing?q=' + searchWord)
   }
 }

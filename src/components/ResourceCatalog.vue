@@ -1,5 +1,23 @@
 <template>
     <v-container class="my-5" grid-list-lg>
+      <div>
+            <v-row>
+                <v-col>
+                    <v-text-field label="Search workout" v-model="searching">
+                    </v-text-field>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col class="mx-2">
+                    <v-btn @click="searchCatalog" color="white">
+                        search
+                    </v-btn>
+                    <v-btn @click="searchClear" color="white">
+                        Clear Search
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </div>
         <v-layout justify-center row wrap>
             <v-flex xs12 sm6 md6 lg4 xl3 v-for="listing in listings" :key="listing.id">
                 <v-card height="450" class="text-center ma-2">
@@ -139,6 +157,19 @@ export default {
       this.events.splice(0, this.events.length)
       this.dialogOpen = false
       this.startDate = moment().format('YYYY-MM-DD')
+    },
+    searchCatalog () {
+      api.searchResource(this.searching)
+        .then(response => {
+          this.listings = response.data
+        })
+    },
+    searchClear () {
+      api.getResource()
+        .then(response => {
+          this.listings = response.data
+        })
+      this.searching = ''
     }
   },
   mounted () {
