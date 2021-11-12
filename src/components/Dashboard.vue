@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <div class="dashboard-greeting">
-      {{ dynamicGreeting }}
+      {{ dynamicGreeting }}, {{ user.firstName }}
     </div>
-    <v-row class="my-2">
+    <v-row class="my-2" v-if="!isProfessional">
       <v-col :sm="12">
       <div>
         Here's your activities for this week
@@ -60,11 +60,15 @@
         </v-sheet>
       </v-col>
     </v-row>
+    <v-row class="ma-2">
+      Metrics for this role are currently unavailable.
+    </v-row>
   </v-container>
 </template>
 <script>
 import moment from 'moment'
 import { getEnrollments } from '../api/plans'
+import { mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -82,6 +86,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['user', 'isProfessional']),
     dynamicGreeting () {
       const hour = moment().hour()
       if (hour >= 5 && hour < 12) {
