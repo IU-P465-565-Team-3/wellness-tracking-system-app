@@ -3,9 +3,14 @@
       <v-row>
         <v-col align-center>
           <v-card>
-            <v-app-bar class="primary" dark>
+            <v-app-bar class="primary" dark v-if="isClient">
               <v-spacer></v-spacer>
-                <h3>Create Event</h3>
+                <h3>Create Plan</h3>
+              <v-spacer></v-spacer>
+            </v-app-bar>
+            <v-app-bar class="grey darken-2" dark v-if="isProfessional">
+              <v-spacer></v-spacer>
+                <h3>Add Events</h3>
               <v-spacer></v-spacer>
             </v-app-bar>
               <v-card-text>
@@ -129,7 +134,9 @@
 </template>
 
 <script>
-import { createAndEnrollToPlan } from '../api/plans'
+import moment from 'moment'
+import { mapGetters } from 'vuex'
+import { createAndEnrollToPlan, createListing } from '../api/plans'
 import { ListingType } from '../enums'
 
 export default {
@@ -147,32 +154,67 @@ export default {
       selectedElement: null
     }
   },
+  props: {
+    name: {
+      type: String,
+      default: moment().unix().toString()
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+    imageSrc: {
+      type: String,
+      default: ''
+    },
+    imageAnnotation: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isClient',
+      'isProfessional'
+    ])
+  },
   methods: {
     addToList () {
       this.events.push({
         name: this.eventName,
         description: this.eventDescription,
-        start: new Date(this.startTime).getTime(),
-        end: new Date(this.endTime).getTime(),
+        start: moment(this.startTime).valueOf(),
+        end: moment(this.endTime).valueOf(),
         timed: true
       })
       this.eventName = ''
       this.eventDescription = ''
     },
     async createPlan () {
-      const startDate = new Date().setHours(0, 0, 0, 0)
-      createAndEnrollToPlan({
-        plan: {
-          typeId: ListingType.FitnessPlan,
-          events: this.events.map(e => ({
-            name: e.name,
-            description: e.description,
-            startTime: e.start - startDate,
-            endTime: e.end - startDate
-          }))
-        },
-        startDate: new Date(startDate).toISOString()
-      })
+      const startDate = moment().format('YYYY-MM-DD')
+      const listing = {
+        name: this.name,
+        description: this.description,
+        imageSrc: this.imageSrc,
+        imageAnnotation: this.imageAnnotation,
+        typeId: ListingType.FitnessPlan,
+        events: this.events.map(e => ({
+          name: e.name,
+          description: e.description,
+          startTime: e.start - startDate,
+          endTime: e.end - startDate
+        }))
+      }
+
+      if (this.isClient) {
+        await createAndEnrollToPlan({
+          plan: listing,
+          startDate
+        })
+      } else if (this.isProfessional) {
+        await createListing(listing)
+      }
+      this.$router.push({ name: 'Dashboard' })
     },
     showEvent ({ nativeEvent, event }) {
       const open = () => {

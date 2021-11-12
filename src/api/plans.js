@@ -4,6 +4,20 @@ export function getPlan (id) {
   return api.get(`/listing/${id}`)
 }
 
+export function createListing (listing) {
+  return api.post('/listing', listing)
+}
+
+export function uploadFile (file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  api.post('/media', formData, {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
+  })
+}
+
 export function getEnrollments () {
   return api.get('/enrollment')
 }

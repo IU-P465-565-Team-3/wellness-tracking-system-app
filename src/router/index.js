@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '../components/Login'
 import Registration from '../components/Registration'
 import Dashboard from '../components/Dashboard'
-import ActivityPlanner from '../components/EventPlanner'
+import EventPlanner from '../components/EventPlanner'
+import CreateListing from '../components/CreateListing'
 import ResourceCatalog from '../components/ResourceCatalog'
 
 Vue.use(VueRouter)
@@ -32,8 +33,13 @@ const routes = [
   },
   {
     path: '/plan',
-    name: 'ActivityPlanner',
-    component: ActivityPlanner
+    name: 'EventPlanner',
+    component: EventPlanner
+  },
+  {
+    path: '/create',
+    name: 'CreateListing',
+    component: CreateListing
   },
   {
     path: '/catalog',
