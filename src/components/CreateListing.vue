@@ -34,22 +34,28 @@
                     </div>
                   </template>
                 </v-textarea>
-                <v-img :lazy-src="imageSrc" max-width="300" max-height="200"></v-img>
                 <v-row>
+                  <v-col cols="12">
+                    <transition name="fade">
+                      <v-img :src="imageUrl" :max-width="300" :max-height="200" class="ma-auto" v-if="imageUrl"></v-img>
+                    </transition>
+                  </v-col>
                   <v-col>
-                    <v-file-input
+                  <v-file-input
                     show-size
                     counter
-                    multiple
                     label="Image"
-                    v-model="files"
+                    v-model="selectedFile"
                     prepend-icon="mdi-image-plus"
+                    @click:clear="clearImage"
+                    :disabled="isUploading"
+                    :loading="isUploading"
                   ></v-file-input>
                   </v-col>
                   <v-col class="shrink ma-auto">
                     <v-btn
                     color="primary"
-                    :disabled="!files.length"
+                    :disabled="!selectedFile || isUploading"
                     @click="uploadImage">
                       Upload
                     </v-btn>
@@ -76,7 +82,7 @@
                 <event-planner v-if="typeId == ListingType.FitnessPlan"
                 :name="name"
                 :description="description"
-                :imageSrc="imageSrc"
+                :imageUrl="imageUrl"
                 :imageAnnotation="imageAnnotation"
                 />
               </v-stepper-content>
@@ -99,17 +105,29 @@ export default {
       currentStep: 1,
       name: '',
       description: '',
-      imageSrc: '',
+      imageUrl: '',
       imageAnnotation: '',
       typeId: ListingType.FitnessPlan,
-      files: [],
+      selectedFile: null,
+      isUploading: false,
       ListingType
     }
   },
   methods: {
     async uploadImage () {
-      const file = this.files[0]
-      this.imageSrc = await uploadFile(file)
+      this.isUploading = true
+      try {
+        const res = await uploadFile(this.selectedFile)
+        if (res.data) {
+          this.imageUrl = res.data
+        }
+      } catch (err) {
+        console.error(err)
+      }
+      this.isUploading = false
+    },
+    clearImage () {
+      this.imageUrl = ''
     }
   },
   components: {

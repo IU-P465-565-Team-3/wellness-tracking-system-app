@@ -11,7 +11,7 @@ export function createListing (listing) {
 export function uploadFile (file) {
   const formData = new FormData()
   formData.append('file', file)
-  api.post('/media', formData, {
+  return api.post('/media', formData, {
     headers: {
       'content-type': 'multipart/form-data'
     }

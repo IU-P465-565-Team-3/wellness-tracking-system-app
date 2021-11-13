@@ -13,19 +13,21 @@ export default new Vuex.Store({
     user (state) {
       return state.user
     },
-    isClient (state) {
-      return state.user.role === Role.Client
+    isClient (_, getters) {
+      return getters.user.role === Role.Client
     },
-    isProfessional (state) {
-      return state.user.role === Role.Professional
+    isProfessional (_, getters) {
+      return getters.user.role === Role.Professional
     },
-    isAdmin (state) {
-      return state.user.role === Role.Admin
+    isAdmin (_, getters) {
+      return getters.user.role === Role.Admin
     }
   },
   mutations: {
     setUser (state, payload) {
-      Object.assign(state.user, payload)
+      state.user = {
+        ...payload
+      }
       localStorage.setItem('user', JSON.stringify(payload))
     }
   },

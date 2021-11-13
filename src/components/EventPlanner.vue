@@ -163,7 +163,7 @@ export default {
       type: String,
       default: ''
     },
-    imageSrc: {
+    imageUrl: {
       type: String,
       default: ''
     },
@@ -191,13 +191,13 @@ export default {
       this.eventDescription = ''
     },
     async createPlan () {
-      const startDate = moment().format('YYYY-MM-DD')
+      const startDate = moment(moment().format('YYYY-MM-DD')).valueOf()
       const listing = {
         name: this.name,
         description: this.description,
-        imageSrc: this.imageSrc,
+        imageUrl: this.imageUrl,
         imageAnnotation: this.imageAnnotation,
-        typeId: ListingType.FitnessPlan,
+        type: ListingType.FitnessPlan,
         events: this.events.map(e => ({
           name: e.name,
           description: e.description,
