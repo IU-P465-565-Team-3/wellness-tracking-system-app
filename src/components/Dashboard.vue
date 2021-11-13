@@ -3,7 +3,7 @@
     <div class="dashboard-greeting">
       {{ dynamicGreeting }}, {{ user.firstName }}
     </div>
-    <v-row class="my-2" v-if="!isProfessional">
+    <v-row class="my-2" v-if="isClient">
       <v-col :sm="12">
       <div>
         Here's your activities for this week
@@ -60,8 +60,8 @@
         </v-sheet>
       </v-col>
     </v-row>
-    <v-row class="ma-2">
-      Metrics for this role are currently unavailable.
+    <v-row class="ma-2" v-else>
+      Metrics are currently available for your role.
     </v-row>
   </v-container>
 </template>
@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'isProfessional']),
+    ...mapGetters(['user', 'isClient']),
     dynamicGreeting () {
       const hour = moment().hour()
       if (hour >= 5 && hour < 12) {
@@ -119,7 +119,7 @@ export default {
     const enrollments = (await getEnrollments()).data
     for (const sub of enrollments) {
       const subColor = this.colors.pop()
-      const startDate = new Date(sub.startDate).getTime()
+      const startDate = moment(sub.startDate).valueOf()
       const mappedEvents = sub.plan.events.map(e => ({
         name: e.name,
         description: e.description,
