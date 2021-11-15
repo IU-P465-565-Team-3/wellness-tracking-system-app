@@ -1,6 +1,6 @@
 import api from '.'
 
-export function getPlan (id) {
+export function getListingById (id) {
   return api.get(`/listing/${id}`)
 }
 

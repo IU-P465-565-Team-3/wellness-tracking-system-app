@@ -61,7 +61,7 @@
       </v-col>
     </v-row>
     <v-row class="ma-2" v-else>
-      Metrics are currently available for your role.
+      Metrics are currently unavailable for your role.
     </v-row>
   </v-container>
 </template>
