@@ -22,22 +22,16 @@
                 <small>Details to show on the catalog page</small>
               </v-stepper-step>
               <v-stepper-content step="1">
-              <v-radio-group row v-model="typeId" hide-details="" label="Listing Type">
-                <v-radio label="Fitness Plan" :value="ListingType.FitnessPlan"></v-radio>
-                <v-radio label="Multimedia Post" :value="ListingType.MultimediaPost"></v-radio>
-              </v-radio-group>
+                <v-radio-group row v-model="typeId" hide-details="" label="Listing Type">
+                  <v-radio label="Fitness Plan" :value="ListingType.FitnessPlan"></v-radio>
+                  <v-radio label="Multimedia Post" :value="ListingType.MultimediaPost"></v-radio>
+                </v-radio-group>
                 <v-text-field label="Name" v-model="name"></v-text-field>
-                <v-textarea v-model="description" no-resize :rows="2" persistent-hint>
-                  <template v-slot:label>
-                    <div>
-                      Description <small>(optional)</small>
-                    </div>
-                  </template>
-                </v-textarea>
+                <v-textarea label="Description" v-model="description" no-resize :rows="2" persistent-hint></v-textarea>
                 <v-row>
                   <v-col cols="12">
                     <transition name="fade">
-                      <v-img :src="imageUrl" :max-width="300" :max-height="200" class="ma-auto" v-if="imageUrl"></v-img>
+                      <v-img :src="imageUrl" :max-width="500" :max-height="500" contain class="ma-auto" v-if="imageUrl"></v-img>
                     </transition>
                   </v-col>
                   <v-col>
@@ -85,6 +79,12 @@
                 :imageUrl="imageUrl"
                 :imageAnnotation="imageAnnotation"
                 />
+                <multimedia-post v-if="typeId == ListingType.MultimediaPost"
+                :name="name"
+                :description="description"
+                :imageUrl="imageUrl"
+                :imageAnnotation="imageAnnotation"
+                :enableCreator="true" />
               </v-stepper-content>
             </v-stepper>
           </v-card-text>
@@ -95,7 +95,8 @@
 </template>
 
 <script>
-import EventPlanner from './EventPlanner.vue'
+import EventPlanner from './EventPlanner'
+import MultimediaPost from './MultimediaPost'
 import { ListingType } from '../enums'
 import { uploadFile } from '../api/plans'
 
@@ -131,7 +132,8 @@ export default {
     }
   },
   components: {
-    EventPlanner
+    EventPlanner,
+    MultimediaPost
   }
 }
 </script>

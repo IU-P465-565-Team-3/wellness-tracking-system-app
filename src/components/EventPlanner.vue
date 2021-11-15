@@ -48,14 +48,6 @@
                           <v-icon>mdi-clock</v-icon>
                         </template>
                     </v-datetime-picker>
-                    <!-- <v-card>
-                      <v-card-text >
-                        <span v-if="!events.length" color="gray--text">No events added</span>
-                        <v-list v-else>
-                          <v-list-item v-for="event, i in events" :key="i" :label="event">{{ event.name }} <small>&nbsp;({{ new Date(event.start).toLocaleString() }} - {{ new Date(event.end).toLocaleString() }})</small></v-list-item>
-                        </v-list>
-                      </v-card-text>
-                    </v-card> -->
                   </v-col>
                 </v-row>
               </v-card-text>

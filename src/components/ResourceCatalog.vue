@@ -52,44 +52,55 @@
                   </v-card-title>
                   <v-card-text>
                       <div>Published by {{ selectedListing.user.firstName }} {{ selectedListing.user.lastName }} ({{ selectedListing.user.username }})</div>
-                      <v-menu
-                        ref="startDateMenu"
-                        v-model="startDateMenu"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="startDate"
-                            label="Plan Start Date"
-                            prepend-icon="mdi-calendar"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="startDate"
-                          @input="startDateMenu = false"
-                        >
-                        </v-date-picker>
-                      </v-menu>
-                      <v-sheet height="500">
-                        <v-calendar
-                          ref="calendar"
-                          :type="type"
-                          :events="events"
-                          :event-overlap-mode="mode"
-                          :event-overlap-threshold="5"
-                          :interval-height="30"
-                        ></v-calendar>
-                      </v-sheet>
+                      <v-row v-if="selectedListing.type === ListingType.FitnessPlan">
+                        <v-col>
+                          <v-menu
+                            ref="startDateMenu"
+                            v-model="startDateMenu"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                          >
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-text-field
+                                v-model="startDate"
+                                label="Plan Start Date"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                              ></v-text-field>
+                            </template>
+                            <v-date-picker
+                              v-model="startDate"
+                              @input="startDateMenu = false"
+                            >
+                            </v-date-picker>
+                          </v-menu>
+                          <v-sheet height="500">
+                          <v-calendar
+                            ref="calendar"
+                            :type="type"
+                            :events="events"
+                            :event-overlap-mode="mode"
+                            :event-overlap-threshold="5"
+                            :interval-height="30"
+                          ></v-calendar>
+                          </v-sheet>
+                        </v-col>
+                      </v-row>
+                      <multimedia-post v-else-if="selectedListing.type === ListingType.MultimediaPost"
+                      :name="selectedListing.name"
+                      :description="selectedListing.description"
+                      :imageUrl="selectedListing.imageUrl"
+                      :imageAnnotation="selectedListing.imageAnnotation"
+                      :content="selectedListing.content">
+                      </multimedia-post>
                     </v-card-text>
-                    <v-card-actions class="justify-center">
-                      <v-btn class="primary--text" @click="enroll">
+                    <v-card-actions class="justify-center" v-if="selectedListing.type === ListingType.FitnessPlan">
+                      <v-btn class="primary--text" @click="enroll" v-if="isClient">
                         <v-icon>mdi-plus</v-icon>
                         <h3>Enroll</h3>
                       </v-btn>
@@ -101,13 +112,14 @@
 </template>
 
 <script>
-import { enrollToPlan, getPlan } from '../api/plans.js'
+import { enrollToPlan, getListingById } from '../api/plans.js'
 import moment from 'moment'
-
+import MultimediaPost from './MultimediaPost'
 import api from '../api/resourceCatalog.js'
+import { mapGetters } from 'vuex'
+import { ListingType } from '../enums/index.js'
 
 export default {
-
   data () {
     return {
       listings: [],
@@ -118,8 +130,13 @@ export default {
       events: [],
       startDateMenu: false,
       startDate: moment().format('YYYY-MM-DD'),
-      selectedListing: null
+      selectedListing: null,
+      searching: '',
+      ListingType
     }
+  },
+  computed: {
+    ...mapGetters(['isClient'])
   },
   methods: {
     updateEvents () {
@@ -134,18 +151,22 @@ export default {
         return newEvent
       }))
     },
-    async viewListing (listing) {
-      const plan = (await getPlan(listing.id)).data
-      this.selectedListing = plan
+    async viewListing (selectedListing) {
+      const listing = (await getListingById(selectedListing.id)).data
+      this.selectedListing = listing
       this.dialogOpen = true
-      this.offsetEvents.splice(0, this.offsetEvents.length, ...plan.events.map(e => ({
-        name: e.name,
-        description: e.description,
-        start: e.startTime,
-        end: e.endTime,
-        timed: true
-      })))
-      this.updateEvents()
+      switch (selectedListing.type) {
+        case ListingType.FitnessPlan:
+          this.offsetEvents.splice(0, this.offsetEvents.length, ...listing.events.map(e => ({
+            name: e.name,
+            description: e.description,
+            start: e.startTime,
+            end: e.endTime,
+            timed: true
+          })))
+          this.updateEvents()
+          break
+      }
     },
     async enroll () {
       await enrollToPlan(this.selectedListing.id, {
@@ -178,14 +199,17 @@ export default {
         const listings = response.data
         this.listings.splice(0, listings.length, ...listings)
       })
-      .catch(error => {
-        console.log('There was an error: ' + error.response)
+      .catch(err => {
+        console.error(err)
       })
   },
   watch: {
     startDate () {
       this.updateEvents()
     }
+  },
+  components: {
+    MultimediaPost
   }
 }
 
