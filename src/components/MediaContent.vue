@@ -5,7 +5,7 @@
         <v-textarea v-if="content.type === ContentType.Text" :rows="3" v-model="content.description" />
       </template>
       <template v-else>
-        <div class="text-pre-wrap text--black" v-text="content.description">
+        <div class="text-pre-wrap black--text" v-text="content.description">
         </div>
       </template>
       <template v-if="content.editable">

@@ -53,41 +53,43 @@
                   <v-card-text>
                       <div>Published by {{ selectedListing.user.firstName }} {{ selectedListing.user.lastName }} ({{ selectedListing.user.username }})</div>
                       <v-row v-if="selectedListing.type === ListingType.FitnessPlan">
-                        <v-menu
-                          ref="startDateMenu"
-                          v-model="startDateMenu"
-                          :close-on-content-click="false"
-                          :nudge-right="40"
-                          transition="scale-transition"
-                          offset-y
-                          min-width="auto"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-text-field
-                              v-model="startDate"
-                              label="Plan Start Date"
-                              prepend-icon="mdi-calendar"
-                              readonly
-                              v-bind="attrs"
-                              v-on="on"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="startDate"
-                            @input="startDateMenu = false"
+                        <v-col>
+                          <v-menu
+                            ref="startDateMenu"
+                            v-model="startDateMenu"
+                            :close-on-content-click="false"
+                            :nudge-right="40"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
                           >
-                          </v-date-picker>
-                        </v-menu>
-                        <v-sheet height="500">
-                        <v-calendar
-                          ref="calendar"
-                          :type="type"
-                          :events="events"
-                          :event-overlap-mode="mode"
-                          :event-overlap-threshold="5"
-                          :interval-height="30"
-                        ></v-calendar>
-                        </v-sheet>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-text-field
+                                v-model="startDate"
+                                label="Plan Start Date"
+                                prepend-icon="mdi-calendar"
+                                readonly
+                                v-bind="attrs"
+                                v-on="on"
+                              ></v-text-field>
+                            </template>
+                            <v-date-picker
+                              v-model="startDate"
+                              @input="startDateMenu = false"
+                            >
+                            </v-date-picker>
+                          </v-menu>
+                          <v-sheet height="500">
+                          <v-calendar
+                            ref="calendar"
+                            :type="type"
+                            :events="events"
+                            :event-overlap-mode="mode"
+                            :event-overlap-threshold="5"
+                            :interval-height="30"
+                          ></v-calendar>
+                          </v-sheet>
+                        </v-col>
                       </v-row>
                       <multimedia-post v-else-if="selectedListing.type === ListingType.MultimediaPost"
                       :name="selectedListing.name"
