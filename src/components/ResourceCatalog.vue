@@ -1,25 +1,31 @@
 <template>
-    <v-container class="my-5" grid-list-lg>
-      <div>
-            <v-row>
-                <v-col>
-                    <v-text-field label="Search workout" v-model="searching">
-                    </v-text-field>
-                </v-col>
-            </v-row>
-            <v-row>
-                <v-col class="mx-2">
-                    <v-btn @click="searchCatalog" color="white">
-                        search
-                    </v-btn>
-                    <v-btn @click="searchClear" color="white">
-                        Clear Search
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </div>
-        <v-layout justify-center row wrap>
-            <v-flex xs12 sm6 md6 lg4 xl3 v-for="listing in listings" :key="listing.id">
+    <v-container>
+      <v-container class="my-5" grid-list-lg>
+        <v-row>
+          <v-col cols="2" md="2">
+          </v-col>
+          <v-col cols="16" md="10">
+            <v-text-field label="Search workout" v-model="searching">
+            </v-text-field>
+            <v-btn @click="searchCatalog" color="white">
+                search
+            </v-btn>
+            <v-btn @click="searchClear" color="white">
+              Clear Search
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+            <v-col cols="2" md="2">
+              <v-col cols="2" md="2">
+                <div v-for="mode in modes" :key="mode.tag">
+                  <input @change="searchFilters" type="checkbox" v-model="checkedModes" v-bind:value="mode" /> {{mode}}
+                </div>
+            </v-col>
+            </v-col>
+            <v-col cols="16" md="10">
+            <v-layout justify-center row wrap>
+              <v-flex xs12 sm6 md6 lg4 xl3 v-for="listing in listings" :key="listing.id">
                 <v-card height="450" class="text-center ma-2">
                     <v-responsive class="pt-4">
                       <v-img width="100%" height="300" :src="listing.imageUrl" class="text-center"></v-img>
@@ -36,8 +42,11 @@
                       </v-layout>
                     </v-card-actions>
                 </v-card>
-            </v-flex>
-        </v-layout>
+              </v-flex>
+            </v-layout>
+          </v-col>
+    </v-row>
+        </v-container>
         <v-dialog transition="dialog-top-transition" max-width="800" v-model="dialogOpen">
             <template v-slot:default>
                 <v-card>
@@ -123,6 +132,8 @@ export default {
   data () {
     return {
       listings: [],
+      modes: ['in-person', 'online', 'hybrid'],
+      checkedModes: [],
       dialogOpen: false,
       mode: 'stack',
       type: 'week',
@@ -191,6 +202,20 @@ export default {
           this.listings = response.data
         })
       this.searching = ''
+    },
+    searchFilters () {
+      if (!this.checkedModes.length) {
+        api.getResource()
+          .then(response => {
+            this.listings = response.data
+          })
+        return this.listings
+      }
+      api.getResource()
+        .then(response => {
+          this.listings = response.data.filter(job => this.checkedModes.includes(job.tags[0].name))
+        })
+      return this.listings.filter(job => this.checkedModes.includes(job.tags[0].name))
     }
   },
   mounted () {
@@ -198,6 +223,7 @@ export default {
       .then(response => {
         const listings = response.data
         this.listings.splice(0, listings.length, ...listings)
+        console.log(this.listings)
       })
       .catch(err => {
         console.error(err)
