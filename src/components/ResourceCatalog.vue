@@ -18,6 +18,7 @@
         <v-row>
             <v-col cols="2" md="2">
               <v-col cols="2" md="2">
+                <h3>Modes</h3>
                 <div v-for="mode in modes" :key="mode.tag">
                   <input @change="searchFilters" type="checkbox" v-model="checkedModes" v-bind:value="mode" /> {{mode}}
                 </div>
