@@ -29,3 +29,19 @@ export function createAndEnrollToPlan (data) {
 export function enrollToPlan (id, data) {
   return api.post(`/enrollment/${id}`, data)
 }
+
+export function getEnrollmentCount (listingId) {
+  return api.get(`/listing/${listingId}/enrollment/count`)
+}
+
+export function getReviews (id) {
+  return api.get(`/listing/${id}/review`)
+}
+
+export function getSelfReview (id) {
+  return api.get(`/listing/${id}/review/current`)
+}
+
+export function addReview (id, data) {
+  return api.post(`/listing/${id}/review`, data)
+}

@@ -120,7 +120,7 @@ export default {
     for (const sub of enrollments) {
       const subColor = this.colors.pop()
       const startDate = moment(sub.startDate).valueOf()
-      const mappedEvents = sub.plan.events.map(e => ({
+      const mappedEvents = sub.listing.events.map(e => ({
         name: e.name,
         description: e.description,
         start: startDate + e.startTime,

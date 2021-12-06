@@ -1,8 +1,8 @@
 <template>
-  <v-container>
-    <v-row>
+  <v-container pa-0>
+    <v-row class="py-2">
       <v-col align-center>
-        <v-card>
+        <v-card outlined>
           <v-app-bar class="grey darken-2" dark v-if="enableCreator">
             <v-spacer></v-spacer>
               <h3>Add Media</h3>
