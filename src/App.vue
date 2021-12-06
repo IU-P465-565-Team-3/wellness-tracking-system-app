@@ -38,6 +38,11 @@
         </v-col>
         <v-spacer />
         <v-col class="shrink">
+          <v-btn small depressed fab color="primary" to="profile">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </v-col>
+        <v-col class="shrink">
           <v-btn small depressed fab color="primary">
             <v-icon>mdi-menu</v-icon>
           </v-btn>

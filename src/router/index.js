@@ -7,6 +7,7 @@ import EventPlanner from '../components/EventPlanner'
 import CreateListing from '../components/CreateListing'
 import ResourceCatalog from '../components/ResourceCatalog'
 import Chat from '../components/Chat'
+import Profile from '../components/Profile'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/chat',
     name: 'chat',
     component: Chat
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile
   },
   {
     path: '/about',
