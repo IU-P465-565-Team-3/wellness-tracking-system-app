@@ -17,23 +17,33 @@
         </v-row>
         <v-row>
             <v-col cols="2" md="2">
-              <v-col cols="2" md="2">
-                <h3>Modes</h3>
-                <div v-for="mode in modes" :key="mode.tag">
-                  <input @change="searchFilters" type="checkbox" v-model="checkedModes" v-bind:value="mode" /> {{mode}}
-                </div>
-            </v-col>
+              <h3>Modes</h3>
+              <div v-for="mode in modes" :key="mode.tag">
+                <input @change="searchFilters" type="checkbox" v-model="checkedModes" v-bind:value="mode" /> {{mode}}
+              </div>
             </v-col>
             <v-col cols="16" md="10">
             <v-layout justify-center row wrap>
               <v-flex xs12 sm6 md6 lg4 xl3 v-for="listing in listings" :key="listing.id">
                 <v-card height="450" class="text-center ma-2">
                     <v-responsive class="pt-4">
-                      <v-img width="100%" height="300" :src="listing.imageUrl" class="text-center"></v-img>
+                      <v-img width="100%" height="260" :src="listing.imageUrl" class="text-center"></v-img>
                     </v-responsive>
                     <v-card-text>
-                        <div class="subheading"> <h2>{{ listing.name }}</h2></div>
-                        <div class="subheading">{{ listing.description }}</div>
+                      <div class="subheading"> <h2>{{ listing.name }}</h2></div>
+                      <div class="subheading">{{ listing.description }}</div>
+                      <v-rating
+                      v-if="listing.averageRating"
+                      hover
+                      length="5"
+                      :value="listing.averageRating"
+                      small
+                      dense
+                      readonly
+                    ></v-rating>
+                    <div v-else>
+                      <small>Unrated</small>
+                    </div>
                     </v-card-text>
                     <v-card-actions>
                       <v-layout justify-center>
@@ -224,7 +234,6 @@ export default {
       .then(response => {
         const listings = response.data
         this.listings.splice(0, listings.length, ...listings)
-        console.log(this.listings)
       })
       .catch(err => {
         console.error(err)
