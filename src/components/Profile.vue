@@ -1,7 +1,7 @@
 <template>
   <v-container>
       <v-row>
-          <v-col cols="5">
+          <v-col cols="6">
               <v-card height="400" width="500">
                   <div class="text-center">
                       Profile
@@ -15,11 +15,10 @@
                       <v-divider></v-divider>
                       Account Type: {{user.role}}
                       <v-divider></v-divider>
-                      Counts: {{subCount}}
                   </div>
               </v-card>
           </v-col>
-          <v-col cols="7">
+          <v-col cols="6">
               <v-card>
                 <div class="text-center">
                       All Professionals
@@ -41,14 +40,23 @@
           </v-col>
       </v-row>
       <v-row>
-        <v-col cols="5">
-              <v-card>
+        <v-col cols="6">
+              <v-card v-if="this.user.role === 'CLIENT'">
                 <div class="text-center">
                       My Subscribed Professionals
                 </div>
                 <v-card-title>
                 </v-card-title>
                 <v-data-table :headers="headersForMuSub" :items="subbedPros">
+                </v-data-table>
+              </v-card>
+              <v-card v-if="this.user.role === 'PROFESSIONAL'">
+                <div class="text-center">
+                      My Subscribed User
+                </div>
+                <v-card-title>
+                </v-card-title>
+                <v-data-table :headers="headersForMuSub" :items="subbedUsers">
                 </v-data-table>
               </v-card>
           </v-col>
@@ -87,31 +95,41 @@ export default {
       ],
       professionals: [],
       subbedPros: [],
-      proid: '',
-      subCount: ''
+      subUserCount: '',
+      subbedUsers: []
     }
   },
   mounted () {
+    // Get all Professionals in the database
     api.getProfessionals()
       .then(response => {
         const professionals = response.data
         this.professionals.splice(0, professionals.length, ...professionals)
       })
+    // Get listed of professionals subscribed by current user (this.user.id == currentUser's id)
     api.getsubbedPros()
       .then(response => {
         const subbedPros = response.data
-        this.subbedPros.splice(0, this.professionals.length, ...subbedPros)
+        this.subbedPros.splice(0, this.subbedPros.length, ...subbedPros)
       })
-    api.getSubcount(this.user.id)
+
+    api.getSubbedUsers(this.user.id)
       .then(response => {
-        this.subCount = response.data
+        const subbedUsers = response.data
+        this.subbedUsers.splice(0, this.subbedUsers.length, ...subbedUsers)
+      })
+
+    api.getSubUserCount(this.user.id)
+      .then(response => {
+        const subUserCount = response.data
+        console.log(subUserCount)
       })
   },
   methods: {
+    // Make a post request to add the professional's id to the list of currentUser subscribed list)
     subProfessional (item) {
-      this.proid = item.id
-      console.log(this.proid)
-      api.addProfessionals(this.proid)
+      api.addProfessionals(item.id)
+      window.location.reload()
     }
   }
 }

@@ -53,9 +53,9 @@ export default {
     ],
     professionals: [],
     otherId: 'kyamada@email.com',
-    otherFirstName: 'Kai',
+    otherFirstName: 'Administration',
     otherEmail: 'kyamada@email.com',
-    otherRole: 'PROFESSIONAL'
+    otherRole: 'ADMIN'
   }),
   computed: {
     ...mapGetters(['user'])
