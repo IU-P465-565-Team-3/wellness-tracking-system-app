@@ -3,7 +3,7 @@ import qs from 'qs'
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_WEB_API_BASE_URL,
-  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'indices', allowDots: true }),
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat', allowDots: true }),
   withCredentials: true
 })
 

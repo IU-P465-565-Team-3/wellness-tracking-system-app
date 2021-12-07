@@ -162,6 +162,10 @@ export default {
     imageAnnotation: {
       type: String,
       default: ''
+    },
+    tags: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
@@ -189,6 +193,7 @@ export default {
         description: this.description,
         imageUrl: this.imageUrl,
         imageAnnotation: this.imageAnnotation,
+        tags: this.tags,
         type: ListingType.FitnessPlan,
         events: this.events.map(e => ({
           name: e.name,

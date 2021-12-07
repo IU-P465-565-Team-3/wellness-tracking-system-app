@@ -23,8 +23,8 @@
               </v-stepper-step>
               <v-stepper-content step="1">
                 <v-radio-group row v-model="typeId" hide-details="" label="Listing Type">
-                  <v-radio label="Fitness Plan" :value="ListingType.FitnessPlan"></v-radio>
-                  <v-radio label="Multimedia Post" :value="ListingType.MultimediaPost"></v-radio>
+                  <v-radio label="Fitness Routine" :value="ListingType.FitnessPlan"></v-radio>
+                  <v-radio label="Media Content" :value="ListingType.MultimediaPost"></v-radio>
                 </v-radio-group>
                 <v-text-field label="Name" v-model="name"></v-text-field>
                 <v-textarea label="Description" v-model="description" no-resize :rows="2" persistent-hint></v-textarea>
@@ -56,6 +56,28 @@
                   </v-col>
                 </v-row>
                 <v-text-field label="Image Annotation" v-model="imageAnnotation"></v-text-field>
+                <v-combobox
+                  ref="tagsCombobox"
+                  class="mb-2"
+                  label="Tags"
+                  v-model="tags"
+                  prepend-icon="mdi-tag-plus"
+                  multiple
+                  itemid="id"
+                  item-text="name"
+                  item-value="id"
+                  return-object
+                  chips
+                  clearable
+                  deletable-chips
+                  hint="Adding relevant tags will improve your content reach"
+                  :items="tagsCollection"
+                  :loading="isLoadingTags"
+                  persistent-hint
+                  auto-select-first
+                  :search-input.sync="tagText"
+                  @keydown.enter="createNewTag"
+                ></v-combobox>
                 <v-btn
                 color="primary"
                 @click="currentStep = 2"
@@ -78,12 +100,14 @@
                 :description="description"
                 :imageUrl="imageUrl"
                 :imageAnnotation="imageAnnotation"
+                :tags="tags"
                 />
                 <multimedia-post v-if="typeId == ListingType.MultimediaPost"
                 :name="name"
                 :description="description"
                 :imageUrl="imageUrl"
                 :imageAnnotation="imageAnnotation"
+                :tags="tags"
                 :enableCreator="true" />
               </v-stepper-content>
             </v-stepper>
@@ -98,7 +122,7 @@
 import EventPlanner from './EventPlanner'
 import MultimediaPost from './MultimediaPost'
 import { ListingType } from '../enums'
-import { uploadFile } from '../api/plans'
+import { getTags, uploadFile } from '../api/plans'
 
 export default {
   data () {
@@ -109,6 +133,10 @@ export default {
       imageUrl: '',
       imageAnnotation: '',
       typeId: ListingType.FitnessPlan,
+      tags: [],
+      tagsCollection: [],
+      tagText: '',
+      isLoadingTags: false,
       selectedFile: null,
       isUploading: false,
       ListingType
@@ -129,7 +157,20 @@ export default {
     },
     clearImage () {
       this.imageUrl = ''
+    },
+    createNewTag () {
+      const name = this.tagText.trim()
+      const hasMatches = this.$refs.tagsCombobox.filteredItems.length
+      const tagEntity = { name }
+      if (!hasMatches && name.length) {
+        this.tags.push(tagEntity)
+        this.tagText = ''
+      }
     }
+  },
+  async mounted () {
+    const tagsCollection = (await getTags()).data
+    this.tagsCollection.splice(0, this.tagsCollection.length, ...tagsCollection)
   },
   components: {
     EventPlanner,
