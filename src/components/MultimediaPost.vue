@@ -47,14 +47,14 @@
                   Image
                   </v-btn>
               </v-col>
-              <v-col class="shrink">
+              <!-- <v-col class="shrink">
                 <v-btn @click="appendContent(ContentType.Video)" disabled>
                   <v-icon>
                     mdi-video-plus
                   </v-icon>
                   Video
                 </v-btn>
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-card-text>
           <v-card-actions>

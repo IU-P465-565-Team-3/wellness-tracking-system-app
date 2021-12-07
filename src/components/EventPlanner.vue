@@ -205,7 +205,7 @@ export default {
 
       if (this.isClient) {
         await createAndEnrollToPlan({
-          plan: listing,
+          listing,
           startDate
         })
       } else if (this.isProfessional) {
