@@ -98,6 +98,10 @@ export default {
       required: false,
       default: () => []
     },
+    tags: {
+      type: Array,
+      default: () => []
+    },
     enableCreator: {
       type: Boolean,
       required: false,
@@ -134,6 +138,7 @@ export default {
         description: this.description,
         imageUrl: this.imageUrl,
         imageAnnotation: this.imageAnnotation,
+        tags: this.tags,
         type: ListingType.MultimediaPost,
         content: this.content.map(c => {
           return {

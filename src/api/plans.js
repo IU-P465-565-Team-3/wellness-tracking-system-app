@@ -45,3 +45,7 @@ export function getSelfReview (id) {
 export function addReview (id, data) {
   return api.post(`/listing/${id}/review`, data)
 }
+
+export function getTags () {
+  return api.get('/tag')
+}

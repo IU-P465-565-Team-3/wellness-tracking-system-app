@@ -1,12 +1,11 @@
-import resource from './index.js'// import index.js instead of this.
+import api from './index.js'
 
-// change this in api.get;
-export default {
-  getResource () {
-    return resource.get('/listing')
-  },
-
-  searchResource (searchWord) {
-    return resource.get('/listing?q=' + searchWord)
-  }
+export function getListings ({ q, publisher, tags }) {
+  return api.get('/listing', {
+    params: {
+      q,
+      publisher,
+      tags
+    }
+  })
 }
