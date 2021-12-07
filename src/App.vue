@@ -1,14 +1,19 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      flat
-      dark
-    >
-      <div class="d-flex headline align-center">
-        Wellness Tracking System
-      </div>
+    <v-app-bar app color="primary" flat dark>
+      <router-link
+        tag="div"
+        :to="
+          $route.name === 'Login' || $route.name === 'Registration'
+            ? '/'
+            : 'dashboard'
+        "
+        class="d-flex headline align-center"
+        :style="{ cursor: 'pointer' }"
+      >
+        <v-icon>mdi-barley</v-icon>
+        MePhy Health
+      </router-link>
       <v-divider vertical class="mx-4" />
       <v-row v-if="$route.name !== 'Login' && $route.name !== 'Registration'">
         <v-col class="shrink">
@@ -31,7 +36,7 @@
             <v-icon>mdi-meditation</v-icon>
           </v-btn>
         </v-col>
-        <v-col  class="shrink">
+        <v-col class="shrink">
           <v-btn small depressed fab color="primary" to="chat">
             <v-icon>mdi-chat</v-icon>
           </v-btn>
@@ -42,9 +47,14 @@
             <v-icon>mdi-account</v-icon>
           </v-btn>
         </v-col>
+        <!-- <v-col class="shrink">
+        <v-btn small depressed fab color="primary">
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
+      </v-col> -->
         <v-col class="shrink">
-          <v-btn small depressed fab color="primary">
-            <v-icon>mdi-menu</v-icon>
+          <v-btn small depressed fab color="primary" to="login">
+            <v-icon>mdi-logout</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -65,11 +75,7 @@ export default {
     //
   }),
   computed: {
-    ...mapGetters([
-      'isClient',
-      'isProfessional',
-      'isAdmin'
-    ])
+    ...mapGetters(['isClient', 'isProfessional', 'isAdmin'])
   },
   methods: {
     ...mapActions(['retrieveUser'])

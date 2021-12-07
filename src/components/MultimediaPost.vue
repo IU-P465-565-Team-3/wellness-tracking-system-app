@@ -30,7 +30,6 @@
               </v-col>
             </v-row>
             <v-row v-if="enableCreator">
-              <v-col>Append content</v-col>
               <v-col class="shrink">
                 <v-btn @click="appendContent(ContentType.Text)">
                   <v-icon>

@@ -51,7 +51,7 @@
       </v-col>
     </v-row>
     <v-row class="ma-2" v-else>
-      Metrics are currently unavailable for your role.
+      <v-btn class="primary" to="create">Create a Listing</v-btn>
     </v-row>
   </v-container>
 </template>
@@ -132,7 +132,6 @@ export default {
     this.recommendationTag1 = tagMap.get(tagId1)
     this.recommendationTag2 = tagMap.get(tagId2)
     this.recommendationTag3 = tagMap.get(tagId3)
-    console.log(tagId1, tagId2, tagMap)
 
     const tagListingCollection = [this.tagListings1, this.tagListings2, this.tagListings3];
     [this.recommendationTag1, this.recommendationTag2, this.recommendationTag3].forEach(async (tag, index) => {
