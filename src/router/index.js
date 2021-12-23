@@ -6,7 +6,6 @@ import Dashboard from '../components/Dashboard'
 import EventPlanner from '../components/EventPlanner'
 import CreateListing from '../components/CreateListing'
 import ResourceCatalog from '../components/ResourceCatalog'
-import Chat from '../components/Chat'
 import Profile from '../components/Profile'
 
 Vue.use(VueRouter)
@@ -47,11 +46,6 @@ const routes = [
     path: '/catalog',
     name: 'Resource Catalog',
     component: ResourceCatalog
-  },
-  {
-    path: '/chat',
-    name: 'chat',
-    component: Chat
   },
   {
     path: '/profile',
